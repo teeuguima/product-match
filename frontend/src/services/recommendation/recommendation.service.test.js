@@ -1,5 +1,5 @@
 import recommendationService from './recommendation.service';
-import mockProducts from '../mocks/mockProducts';
+import mockProducts from '../../mocks/mockProducts';
 
 describe('recommendationService', () => {
   test('Retorna recomendação correta para SingleProduct com base nas preferências selecionadas', () => {
@@ -80,4 +80,19 @@ describe('recommendationService', () => {
     expect(recommendations).toHaveLength(1);
     expect(recommendations[0].name).toBe('RD Conversas');
   });
+});
+
+test('Retorna array vazio quando não há produtos compatíveis', () => {
+  const formData = {
+    selectedPreferences: ['Preferência inexistente'],
+    selectedFeatures: ['Feature inexistente'],
+    selectedRecommendationType: 'MultipleProducts',
+  };
+
+  const recommendations = recommendationService.getRecommendations(
+    formData,
+    mockProducts
+  );
+
+  expect(recommendations).toHaveLength(0);
 });
